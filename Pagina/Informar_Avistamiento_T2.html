@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Informacion de Avistamiento </title>
+        <link rel="stylesheet" href="css_T2/styles_T2.css">
+        <script src="scripts_T2/sweetalert2.all.js"></script>
+        <script defer src="scripts_T2/funciones_T2.js"></script>
+    </head>
+    <body>
+        <center><h1>Informar Avistamiento</h1></center>
+        <ul class="menu">
+            <li><a href="cgi-bin/Portada_T2.py" class="hover">Portada</a></li>
+            <li><a href="Informar_Avistamiento_T2.html" class="hover">Informar Avistamiento</a></li>
+            <li><a href="cgi-bin/Listado_T2.py" class="hover">Listado de Avistamientos</a></li>
+            <li><a href="Estadisticas_T2.html" class="hover">Estadísticas</a></li>
+        </ul>
+        <br>
+        <strong>¡Gracias por ayudarnos!</strong>, para ingresar tu avistamiento rellena este formulario con los siguientes datos: :D
+        <br>
+        <br>
+        <form method="post" id="form_avistamiento" action="cgi-bin/cgi_T2.py" enctype="multipart/form-data">
+            <!-- Regiones -->
+            <div id="section_lugar" class="section">
+                <div id="section_lugar_name" class="section_name"> <strong>Lugar:</strong> </div>
+                    <!-- Regiones  -->
+                    <div id="regiones" class="entrada">
+                        <div class="entrada_nombre"> Ingrese Region: </div>
+                        <select name="region" id="Region">
+                        </select>
+                    </div>
+                    <!-- Comunas de Regiones -->
+                    <div id="comunas" class="entrada">
+                        <div class="entrada_nombre"> Ingrese Comuna: </div>
+                        <select name="comuna" id="comuna">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div id="Sector" class="entrada">
+                        <div id="Sector_leyenda" class="entrada_nombre">Sector:</div>
+                        <input type="text" placeholder="Detalles del sector de avistamiento"  id="sector_inp" name="sector_inp"
+                        class="sector_inp_class">
+                    </div>
+            </div>
+            <br>
+            <!-- Contacto -->
+            <div id="section_datos" class="section">
+                <!-- Datos de Contacto -->
+                <div class="section_name"> <strong>Datos de Contacto.</strong> </div>
+                <div id="dato_nombre" class="entrada">
+                    <div class="entrada_nombre">Nombre:</div>
+                    <input type="text" name="nombre" placeholder="Inserte su nombre" maxlength="100" id="nombre" class="nombre_inp_class">
+                </div>
+                <!-- Email -->
+                <div id=dato_email class="entrada">
+                    <div class="entrada_nombre">Email:</div>
+                    <input type="text" name="email" placeholder="Correo electrónico" id="email">
+                </div>
+                <!-- Celular -->
+                <div id="dato_celular" class="entrada">
+                    <div class="entrada_nombre">Celular:</div>
+                    <input type="text" name="celular" placeholder="N° celular" id="celular">
+                </div>
+            </div>
+            <br>
+            <!-- Avistamiento -->
+            <div id="section_avistamiento" class="section">
+            </div>
+            <!-- Envio del formulario  -->
+            <br>
+            <br>
+            <center>
+            <div id="envio_form" class="envio_form">
+            </div>
+            </center>
+        </form>
+        <center>
+            <div id="botones" class="botones_add"></div>
+        </center>
+    </body>
+</html>
