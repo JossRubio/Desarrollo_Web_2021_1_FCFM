@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Estadisticas de los Avistamientos</title>
+        <link rel="stylesheet" href="css_T2/styles_T2.css">
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.canvaswrapper.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.colorhelpers.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.saturated.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.browser.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.drawSeries.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.uiConstants.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.categories.js"></script>
+	    <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.legend.js"></script>
+	    <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.pie.js"></script>
+        <script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/source/jquery.flot.axislabels.js"></script>
+        <script language="JavaScript" type="text/javascript" src="scripts_T2/ajax_test.js"></script>
+        <script type="text/javascript">
+
+        let data = new FormData();
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'cgi-bin/stats_test.py');
+        xhr.timeout = 700;
+        xhr.onload = function (data){
+            $(function() {
+
+		let d1 = string_to_array(data.currentTarget.responseText, true);
+		var options = {
+			series: {
+				lines: {
+					show: true,
+					lineWidth: 2
+				},
+				points: {
+					show: true
+				}
+			},
+			xaxis: {
+				tickDecimals: 0,
+				tickSize: 1,
+                axisLabel: 'Dia del mes'
+
+			},
+            yaxis: {
+			    axisLabel: 'Cantidad de avistamientos'
+            },
+		};
+
+		$.plot("#placeholder", [d1], options);
+
+	});}
+	xhr.send(data);
+
+    let data2 = new FormData();
+    let xhr2 = new XMLHttpRequest();
+    xhr2.open('POST', 'cgi-bin/stats_test2.py');
+    xhr2.timeout = 700;
+    xhr2.onload = function (data2){
+        $(function() {
+
+        let insect_types = ["arácnido","insecto","miriápodo","no sé"];
+        let count_types = string_to_array(data2.currentTarget.responseText, false);
+
+        //console.log(count_types.length);
+		var d2 = [];
+
+		for (var i = 0; i < count_types.length; i++) {
+			d2[i] = {
+				label: insect_types[i],
+				data: count_types[i]
+			}
+		}
+
+        //console.log(d2)
+		var placeholder = $("#placeholder2");
+		$.plot(placeholder, d2, {
+				series: {
+					pie: {
+						show: true
+					}
+				}
+			});
+
+		});
+    }
+    xhr2.send(data2);
+
+    let data3 = new FormData();
+    let xhr3 = new XMLHttpRequest();
+    xhr3.open('POST', 'cgi-bin/stats_test3.py');
+    xhr3.timeout = 700;
+    xhr3.onload = function (data3){
+        $(function() {
+
+	    let meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ag","Sep","Oct","Nov","Dic"];
+
+	    let count_states = string_to_array(data3.currentTarget.responseText);
+	    console.log(count_states);
+
+        let D1 = [];
+	    for (let i=0; i<meses.length; i++){
+	        D1.push([meses[i], count_states[i]]);
+        }
+
+	    let D2 = [];
+	    for (let i=0; i<meses.length; i++){
+	        D2.push([meses[i], count_states[i+12]]);
+        }
+
+	    let D3 = [];
+	    for (let i=0; i<meses.length; i++){
+	        D3.push([meses[i], count_states[i+24]]);
+        }
+
+        var data_total = [D1, D2, D3]
+
+
+        var states = ['nose', 'vivo', 'muerto'];
+        var positions = ['left', 'center', 'right'];
+        var DT = [];
+
+		for (var i = 0; i < states.length; i++) {
+
+			DT[i] = {
+				label: states[i],
+				data: data_total[i],
+                bars: {
+                show: true,
+                barWidth: 0.2,
+                align: positions[i],
+            }
+			}
+		}
+		console.log(DT);
+
+$.plot($("#placeholder3"),
+        DT,
+        {
+            xaxis: {
+                show: true,
+                mode: "categories",
+                tickLength: 0,
+                axisLabel: 'Mes'
+            },
+            yaxis:{
+                axisLabel: 'Cantidad de Avistamientos'
+            },
+            legend: {
+                show: true
+            }
+        }
+);
+	});
+    }
+    xhr3.send(data3)
+/*
+    */
+        </script>
+    </head>
+    <body>
+        <center><h1>Estadisticas de los Avistamientos</h1></center>
+        <ul class="menu">
+            <li><a href="cgi-bin/Portada_T2.py" class="hover">Portada</a></li>
+            <li><a href="Informar_Avistamiento_T2.html" class="hover">Informar Avistamiento</a></li>
+            <li><a href="cgi-bin/Listado_T2.py" class="hover">Listado de Avistamientos</a></li>
+            <li><a href="Estadisticas_T2.html" class="hover">Estadísticas</a></li>
+        </ul>
+    <div class="texto_estadisticas">
+      <br>
+      <strong>¡Tenemos varios registros en nuestras página web!</strong>, con tu ayuda podremos tener
+      muchos más. <strong> ¡Gracias por colaborar! </strong>. Tenemos información gráfica de lo siguiente:
+    </div>
+    <div id="content">
+        <center><h3> Cantidad de avistamientos por día registrados </h3></center>
+        <div class="demo-container">
+            <div id="placeholder" class="demo-placeholder">
+            </div>
+        </div>
+        <center><h3> Distribución de la cantidad de tipos de avistamientos </h3></center>
+        <div class="demo-container">
+            <div id="placeholder2" class="demo-placeholder">
+            </div>
+        </div>
+        <center><h3> Estados de los avistamientos </h3></center>
+        <div class="demo-container">
+            <div id="placeholder3" class="demo-placeholder">
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

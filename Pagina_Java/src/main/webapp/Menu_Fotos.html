@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Evaluación de Fotos</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        table th:hover{
+            background: #cccccc;
+            color: #000140;
+        }
+    </style>
+    <script>
+        function pop(id_listado, form){
+            document.getElementById(id_listado).style.display = form;
+        }
+
+        function hide(id_listado){
+            document.getElementById(id_listado).style.display = "none";
+        }
+    </script>
+</head>
+<body>
+    <center><h1> Evaluación de fotos </h1></center>
+<br>
+Tenemos diversas imágenes en nuestro repositorio. Te gusta alguna de las fotos?, quisieras dejar tu opinión sobre
+la imagen mostrada?. Si es así, entonces haz click en alguna de las imágenes dejadas por los usuarios y hazles saber tu
+visión sobre la imagen aportada!.
+
+<br>
+<center><strong><h3>Imágenes</h3></strong></center>
+<center>
+    <table id="Table" style="display: table">
+        <tbody>
+        <tr>
+            <th id="0"><img src="media/20dd4f11362dc471382ce.jpg" width="120" height="120" onclick="hide('Table'), pop('formulario', 'block')"></th>
+            <th id="1">Imagen 2</th>
+            <th id="2">Imagen 3</th>
+            <th id="3">Imagen 4</th>
+        </tr>
+        <tr>
+            <th>Imagen 5</th>
+            <th>Imagen 6</th>
+            <th>Imagen 7</th>
+            <th>Imagen 8</th>
+        </tr>
+        </tbody>
+    </table>
+    <div id="formulario" style="display: none">
+        <form method="post">
+            <div class="section_list">
+                <div class="entrada_nombre">Comentario:</div>
+                <textarea id="comment" rows="20" cols="50" name="comment" placeholder="Inserte un comentario"></textarea>
+                <br>
+                <div class="entrada_nombre">Nota:</div>
+                <select name="note" id="note">
+                    <option>4</option>
+                    <option>7</option>
+                </select>
+                <br>
+                <div class="entrada_nombre">Imagen</div>
+                <input name="foto_asociada" value="5" disabled id="foto_asociada">
+                <button type="button">Enviar Comentario</button>
+            </div>
+        </form>
+        <button type="button" onclick="hide('formulario'), pop('Table', 'table')"> Seleccionar otra foto </button>
+    </div>
+</center>
+
+</body>
+</html>
